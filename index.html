@@ -8,8 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Google AdSense -->
+    
+    <!-- ===== جميع أكواد الإعلانات ===== -->
+    <!-- 1. مكتبة AMP للإعلانات التلقائية -->
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+    
+    <!-- 2. مكتبة AdSense الرئيسية -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8584077826935053" crossorigin="anonymous"></script>
+    
     <style>
         * {
             margin: 0;
@@ -79,11 +85,11 @@
             color: #ffd700;
         }
 
-        /* Google Ads */
+        /* ===== حاويات الإعلانات ===== */
         .ad-container {
             margin: 20px 0;
             padding: 10px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
             border-radius: 10px;
             text-align: center;
         }
@@ -92,13 +98,36 @@
             color: #999;
             font-size: 12px;
             margin-bottom: 5px;
+            text-align: center;
         }
 
-        /* نبذة عن الخدمات */
+        /* إعلان جانبي */
+        .sidebar-ads {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        /* إعلان بين الصفحات */
+        .interstitial-ad {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        /* ===== نبذة عن الخدمات ===== */
         .about-section {
             background: #fff;
             padding: 60px 0;
-            margin: 20px 0;
+            margin: 100px 0 20px;
         }
 
         .about-container {
@@ -174,10 +203,11 @@
             color: #28a745;
         }
 
-        /* التقييمات */
+        /* ===== التقييمات (في الأسفل) ===== */
         .reviews-section {
             background: #f8f9fa;
             padding: 60px 0;
+            margin-top: 40px;
         }
 
         .reviews-title {
@@ -260,57 +290,12 @@
             font-size: 12px;
         }
 
-        .review-platforms i {
-            margin-left: 10px;
-            font-size: 16px;
-        }
-
-        /* نموذج التقييم */
-        .review-form-section {
-            background: #fff;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 600px;
-            margin: 30px auto;
-            display: none;
-        }
-
-        .review-form-section.show {
-            display: block;
-        }
-
-        .rating-input {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .rating-input input {
-            display: none;
-        }
-
-        .rating-input label {
-            font-size: 40px;
-            color: #ddd;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .rating-input label:hover,
-        .rating-input label:hover ~ label,
-        .rating-input input:checked ~ label {
-            color: #ffd700;
-        }
-
-        /* الصفحات */
-        .order-page, .payment-page, .activation-page {
+        /* ===== نموذج الطلب ===== */
+        .order-page {
             padding: 120px 0 60px;
             min-height: 100vh;
         }
 
-        /* نموذج الطلب */
         .order-container {
             max-width: 700px;
             margin: 0 auto;
@@ -345,7 +330,7 @@
             cursor: pointer;
         }
 
-        /* إخفاء رقم المحفظة */
+        /* ===== إخفاء رقم المحفظة ===== */
         .wallet-input-container {
             position: relative;
         }
@@ -389,6 +374,45 @@
             display: none;
         }
 
+        /* ===== نموذج التقييم ===== */
+        .review-form-section {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            display: none;
+        }
+
+        .review-form-section.show {
+            display: block;
+        }
+
+        .rating-input {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .rating-input input {
+            display: none;
+        }
+
+        .rating-input label {
+            font-size: 40px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .rating-input label:hover,
+        .rating-input label:hover ~ label,
+        .rating-input input:checked ~ label {
+            color: #ffd700;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -408,13 +432,16 @@
                 font-size: 28px;
             }
             
-            .reviews-grid {
+            .sidebar-ads {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- ===== إعلان AMP التلقائي (بعد الفتح مباشرة) ===== -->
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-8584077826935053"></amp-auto-ads>
+
     <!-- Header -->
     <header>
         <div class="container header-content">
@@ -424,17 +451,15 @@
                     <li><a href="#" onclick="showPage('order')">الرئيسية</a></li>
                     <li><a href="#about">نبذة عنا</a></li>
                     <li><a href="#reviews">التقييمات</a></li>
-                    <li><a href="#services">الخدمات</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- إعلان أعلى الصفحة -->
+    <!-- ===== إعلان أعلى الموقع (الأول) ===== -->
     <div class="container">
         <div class="ad-container">
             <div class="ad-label">إعلان</div>
-            <!-- اعلان_اعلى_الموقع -->
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-8584077826935053"
@@ -444,80 +469,6 @@
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
-
-    <!-- نبذة عن الخدمات -->
-    <section class="about-section" id="about">
-        <div class="about-container">
-            <h2 class="about-title">لماذا Social Booster Pro؟</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="about-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>تسريع النمو</h3>
-                    <p>نساعدك على نمو حساباتك بسرعة وأمان مع نتائج مضمونة تبدأ في الظهور خلال دقائق</p>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check-circle"></i> زيادة حقيقية وآمنة</li>
-                        <li><i class="fas fa-check-circle"></i> بدء فوري للخدمة</li>
-                        <li><i class="fas fa-check-circle"></i> متابعين نشيطين</li>
-                    </ul>
-                </div>
-
-                <div class="about-card">
-                    <div class="about-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>أمان وخصوصية</h3>
-                    <p>نحن نهتم بأمان حساباتك، جميع خدماتنا آمنة ولا تخالف سياسات المنصات</p>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check-circle"></i> تشفير كامل للبيانات</li>
-                        <li><i class="fas fa-check-circle"></i> بدون باسورد</li>
-                        <li><i class="fas fa-check-circle"></i> ضمان استعادة الأموال</li>
-                    </ul>
-                </div>
-
-                <div class="about-card">
-                    <div class="about-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>دعم فني 24/7</h3>
-                    <p>فريق دعم متخصص جاهز لمساعدتك في أي وقت وحل أي مشكلة تواجهك</p>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check-circle"></i> رد فوري</li>
-                        <li><i class="fas fa-check-circle"></i> حل مشاكل سريع</li>
-                        <li><i class="fas fa-check-circle"></i> استشارات مجانية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- إعلان منتصف الصفحة -->
-    <div class="container">
-        <div class="ad-container">
-            <div class="ad-label">إعلان</div>
-            <!-- اعلان_منتصف_الموقع -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-8584077826935053"
-                 data-ad-slot="2904141418"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-    </div>
-
-    <!-- التقييمات -->
-    <section class="reviews-section" id="reviews">
-        <div class="container">
-            <h2 class="reviews-title">تقييمات عملائنا</h2>
-            <p class="reviews-subtitle">ما يقوله العملاء عن خدماتنا</p>
-            
-            <div class="reviews-grid" id="reviewsContainer">
-                <!-- التقييمات ستظهر هنا -->
-            </div>
-        </div>
-    </section>
 
     <!-- الصفحة الأولى: نموذج الطلب -->
     <section class="order-page" id="orderPage">
@@ -574,6 +525,94 @@
         </div>
     </section>
 
+    <!-- ===== إعلانات جانبية (2 إعلانات) ===== -->
+    <div class="container">
+        <div class="sidebar-ads">
+            <!-- إعلان جانبي 1 -->
+            <div class="ad-container">
+                <div class="ad-label">إعلان</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="autorelaxed"
+                     data-ad-client="ca-pub-8584077826935053"
+                     data-ad-slot="9040442410"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <!-- إعلان جانبي 2 -->
+            <div class="ad-container">
+                <div class="ad-label">إعلان</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8584077826935053"
+                     data-ad-slot="8096225516"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+        </div>
+    </div>
+
+    <!-- نبذة عن الخدمات -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <h2 class="about-title">لماذا Social Booster Pro؟</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>تسريع النمو</h3>
+                    <p>نساعدك على نمو حساباتك بسرعة وأمان مع نتائج مضمونة تبدأ في الظهور خلال دقائق</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> زيادة حقيقية وآمنة</li>
+                        <li><i class="fas fa-check-circle"></i> بدء فوري للخدمة</li>
+                        <li><i class="fas fa-check-circle"></i> متابعين نشيطين</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>أمان وخصوصية</h3>
+                    <p>نحن نهتم بأمان حساباتك، جميع خدماتنا آمنة ولا تخالف سياسات المنصات</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> تشفير كامل للبيانات</li>
+                        <li><i class="fas fa-check-circle"></i> بدون باسورد</li>
+                        <li><i class="fas fa-check-circle"></i> ضمان استعادة الأموال</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>دعم فني 24/7</h3>
+                    <p>فريق دعم متخصص جاهز لمساعدتك في أي وقت وحل أي مشكلة تواجهك</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> رد فوري</li>
+                        <li><i class="fas fa-check-circle"></i> حل مشاكل سريع</li>
+                        <li><i class="fas fa-check-circle"></i> استشارات مجانية</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== إعلان داخل المحتوى ===== -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">إعلان</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="autorelaxed"
+                 data-ad-client="ca-pub-8584077826935053"
+                 data-ad-slot="5166809841"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
     <!-- نموذج التقييم الإجباري -->
     <div class="review-form-section" id="reviewForm">
         <h3 style="text-align: center; margin-bottom: 20px;">قبل إتمام العملية</h3>
@@ -607,49 +646,42 @@
         </button>
     </div>
 
-    <!-- الصفحة الثانية: الدفع -->
-    <section class="payment-page" id="paymentPage" style="display: none;">
+    <!-- ===== التقييمات (في الأسفل) ===== -->
+    <section class="reviews-section" id="reviews">
         <div class="container">
-            <button class="btn-back" onclick="showPage('order')">العودة</button>
+            <h2 class="reviews-title">تقييمات عملائنا</h2>
+            <p class="reviews-subtitle">ما يقوله العملاء عن خدماتنا</p>
             
-            <div class="payment-container">
-                <!-- محتوى الدفع مع إخفاء رقم المحفظة -->
-                <div class="payment-form">
-                    <h3>بيانات الدفع</h3>
-                    
-                    <div class="input-group">
-                        <label>رقم محفظتك</label>
-                        <div class="wallet-input-container">
-                            <input type="tel" id="walletNumber" class="form-control" placeholder="أدخل رقم محفظتك" value="01015229611">
-                            <div class="wallet-mask">
-                                <i class="fas fa-lock"></i>
-                                <span id="maskedWallet">•••••••••••</span>
-                            </div>
-                        </div>
-                        <small style="color: #28a745; display: block; margin-top: 5px;">
-                            <i class="fas fa-shield-alt"></i> رقمك مشفر وآمن
-                        </small>
-                    </div>
-                    
-                    <!-- باقي عناصر الدفع -->
-                </div>
+            <div class="reviews-grid" id="reviewsContainer">
+                <!-- التقييمات ستظهر هنا -->
             </div>
         </div>
     </section>
 
-    <!-- إعلان أسفل الصفحة -->
+    <!-- ===== إعلان أسفل الموقع ===== -->
     <div class="container">
         <div class="ad-container">
             <div class="ad-label">إعلان</div>
-            <!-- اعلان_اسفل_الموقع -->
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-8584077826935053"
-                 data-ad-slot="2904141418"
+                 data-ad-slot="3136510471"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+    </div>
+
+    <!-- ===== إعلان بين الصفحات (يظهر عند التنقل) ===== -->
+    <div class="interstitial-ad" id="interstitialAd">
+        <div class="ad-label">إعلان</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-format="autorelaxed"
+             data-ad-client="ca-pub-8584077826935053"
+             data-ad-slot="9165764600"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <button onclick="closeInterstitialAd()" style="margin-top: 10px; padding: 5px 10px;">إغلاق</button>
     </div>
 
     <script>
@@ -659,22 +691,19 @@
                 name: 'أحمد محمد',
                 rating: 5,
                 comment: 'خدمة ممتازة وسريعة جداً، حصلت على 5000 متابع في تيك توك خلال ساعات',
-                date: '2024-01-15',
-                platform: 'tiktok'
+                date: '2024-01-15'
             },
             {
                 name: 'سارة أحمد',
                 rating: 5,
                 comment: 'موقع رائع وأسعار مناسبة، الدعم الفني متعاون جداً',
-                date: '2024-01-14',
-                platform: 'instagram'
+                date: '2024-01-14'
             },
             {
                 name: 'محمد علي',
                 rating: 4,
                 comment: 'خدمة المشاهدات على يوتيوب ممتازة، ساعدتني في زيادة ظهور فيديوهاتي',
-                date: '2024-01-13',
-                platform: 'youtube'
+                date: '2024-01-13'
             }
         ];
 
@@ -684,8 +713,6 @@
             container.innerHTML = '';
             
             reviews.forEach(review => {
-                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-                
                 const reviewCard = `
                     <div class="review-card">
                         <div class="review-header">
@@ -734,55 +761,61 @@
                 name: name,
                 rating: parseInt(rating.value),
                 comment: comment,
-                date: new Date().toISOString().split('T')[0],
-                platform: document.getElementById('platformSelect').value
+                date: new Date().toISOString().split('T')[0]
             };
             
-            reviews.unshift(newReview); // إضافة في البداية
+            reviews.unshift(newReview);
             displayReviews();
             
-            // إخفاء نموذج التقييم وإظهار الدفع
+            // إخفاء نموذج التقييم
             document.getElementById('reviewForm').classList.remove('show');
-            showPage('payment');
             
-            // تحديث ملخص الطلب
-            updateOrderSummary();
+            // إظهار إعلان بين الصفحات
+            showInterstitialAd();
+            
+            // الانتقال للدفع بعد الإعلان
+            setTimeout(() => {
+                closeInterstitialAd();
+                showPaymentPage();
+            }, 3000);
         }
 
-        // تحديث ملخص الطلب
-        function updateOrderSummary() {
-            // كود تحديث ملخص الطلب
+        // إظهار إعلان بين الصفحات
+        function showInterstitialAd() {
+            document.getElementById('interstitialAd').style.display = 'block';
+        }
+
+        // إغلاق إعلان بين الصفحات
+        function closeInterstitialAd() {
+            document.getElementById('interstitialAd').style.display = 'none';
+        }
+
+        // إظهار صفحة الدفع
+        function showPaymentPage() {
+            alert('سيتم نقلك لصفحة الدفع');
+            // هنا كود صفحة الدفع
         }
 
         // إظهار الصفحة المطلوبة
         function showPage(page) {
-            document.getElementById('orderPage').style.display = 'none';
-            document.getElementById('paymentPage').style.display = 'none';
-            document.getElementById('reviewForm').classList.remove('show');
-            
             if (page === 'order') {
                 document.getElementById('orderPage').style.display = 'block';
-            } else if (page === 'payment') {
-                document.getElementById('paymentPage').style.display = 'block';
+                document.getElementById('reviewForm').classList.remove('show');
             }
         }
 
-        // إخفاء رقم المحفظة
-        document.getElementById('walletNumber').addEventListener('input', function(e) {
-            const value = e.target.value;
-            const masked = document.getElementById('maskedWallet');
-            
-            if (value.length > 0) {
-                const last4 = value.slice(-4);
-                masked.innerHTML = '••••••••' + last4;
-            } else {
-                masked.innerHTML = '•••••••••••';
-            }
-        });
-
         // حساب السعر
         function calculatePrice() {
-            // كود حساب السعر
+            const platform = document.getElementById('platformSelect').value;
+            const service = document.getElementById('serviceTypeSelect').value;
+            const quantity = parseInt(document.getElementById('quantity').value) || 1000;
+            
+            let basePrice = 9.99;
+            if (service === 'views') basePrice = 4.99;
+            if (service === 'likes') basePrice = 2.99;
+            
+            const total = (quantity / 1000) * basePrice;
+            document.getElementById('totalPrice').value = `$ ${total.toFixed(2)}`;
         }
 
         // تحميل الصفحة
