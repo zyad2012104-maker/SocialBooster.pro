@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Social Booster Pro - تعزيز وتطوير حسابات السوشيال ميديا</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8584077826935053" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 15px;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Google Ads */
+        .ad-container {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .ad-label {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        /* نبذة عن الخدمات */
+        .about-section {
+            background: #fff;
+            padding: 60px 0;
+            margin: 20px 0;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .about-title {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .about-card {
+            background: linear-gradient(135deg, #667eea10, #764ba210);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #fff;
+            font-size: 35px;
+        }
+
+        .about-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .about-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .benefits-list {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .benefits-list li {
+            list-style: none;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefits-list i {
+            color: #28a745;
+        }
+
+        /* التقييمات */
+        .reviews-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .reviews-title {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .reviews-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .review-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .review-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .review-stars {
+            color: #ffd700;
+        }
+
+        .review-stars i {
+            margin: 0 2px;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .review-platforms i {
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        /* نموذج التقييم */
+        .review-form-section {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            display: none;
+        }
+
+        .review-form-section.show {
+            display: block;
+        }
+
+        .rating-input {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .rating-input input {
+            display: none;
+        }
+
+        .rating-input label {
+            font-size: 40px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .rating-input label:hover,
+        .rating-input label:hover ~ label,
+        .rating-input input:checked ~ label {
+            color: #ffd700;
+        }
+
+        /* الصفحات */
+        .order-page, .payment-page, .activation-page {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+        }
+
+        /* نموذج الطلب */
+        .order-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-proceed {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* إخفاء رقم المحفظة */
+        .wallet-input-container {
+            position: relative;
+        }
+
+        .wallet-mask {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            padding: 0 45px;
+            color: #333;
+            font-family: monospace;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .wallet-mask i {
+            margin-left: 10px;
+            color: #28a745;
+        }
+
+        #walletNumber {
+            position: relative;
+            z-index: 2;
+            background: transparent;
+            color: transparent;
+            caret-color: #333;
+        }
+
+        #walletNumber:focus {
+            color: #333;
+        }
+
+        #walletNumber:focus + .wallet-mask {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                justify-content: center;
+            }
+            
+            .order-container {
+                padding: 25px;
+            }
+            
+            .about-title {
+                font-size: 28px;
+            }
+            
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Social<span>Booster</span>.pro</div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('order')">الرئيسية</a></li>
+                    <li><a href="#about">نبذة عنا</a></li>
+                    <li><a href="#reviews">التقييمات</a></li>
+                    <li><a href="#services">الخدمات</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- إعلان أعلى الصفحة -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">إعلان</div>
+            <!-- اعلان_اعلى_الموقع -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8584077826935053"
+                 data-ad-slot="2904141418"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <!-- نبذة عن الخدمات -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <h2 class="about-title">لماذا Social Booster Pro؟</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>تسريع النمو</h3>
+                    <p>نساعدك على نمو حساباتك بسرعة وأمان مع نتائج مضمونة تبدأ في الظهور خلال دقائق</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> زيادة حقيقية وآمنة</li>
+                        <li><i class="fas fa-check-circle"></i> بدء فوري للخدمة</li>
+                        <li><i class="fas fa-check-circle"></i> متابعين نشيطين</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>أمان وخصوصية</h3>
+                    <p>نحن نهتم بأمان حساباتك، جميع خدماتنا آمنة ولا تخالف سياسات المنصات</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> تشفير كامل للبيانات</li>
+                        <li><i class="fas fa-check-circle"></i> بدون باسورد</li>
+                        <li><i class="fas fa-check-circle"></i> ضمان استعادة الأموال</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>دعم فني 24/7</h3>
+                    <p>فريق دعم متخصص جاهز لمساعدتك في أي وقت وحل أي مشكلة تواجهك</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> رد فوري</li>
+                        <li><i class="fas fa-check-circle"></i> حل مشاكل سريع</li>
+                        <li><i class="fas fa-check-circle"></i> استشارات مجانية</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- إعلان منتصف الصفحة -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">إعلان</div>
+            <!-- اعلان_منتصف_الموقع -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8584077826935053"
+                 data-ad-slot="2904141418"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <!-- التقييمات -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <h2 class="reviews-title">تقييمات عملائنا</h2>
+            <p class="reviews-subtitle">ما يقوله العملاء عن خدماتنا</p>
+            
+            <div class="reviews-grid" id="reviewsContainer">
+                <!-- التقييمات ستظهر هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- الصفحة الأولى: نموذج الطلب -->
+    <section class="order-page" id="orderPage">
+        <div class="container">
+            <div class="order-container">
+                <h1 class="page-title">طلب خدمة التفعيل</h1>
+                <p class="page-subtitle">اختر الخدمة التي تريدها وأدخل رابط حسابك</p>
+
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label><i class="fab fa-tiktok"></i> اختر المنصة</label>
+                        <select class="form-control" id="platformSelect" onchange="calculatePrice()">
+                            <option value="tiktok">تيك توك (TikTok)</option>
+                            <option value="instagram">انستقرام (Instagram)</option>
+                            <option value="facebook">فيسبوك (Facebook)</option>
+                            <option value="youtube">يوتيوب (YouTube)</option>
+                            <option value="kwai">كواي (Kwai)</option>
+                            <option value="snapchat">سناب شات (Snapchat)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> نوع الخدمة</label>
+                        <select class="form-control" id="serviceTypeSelect" onchange="calculatePrice()">
+                            <option value="followers">متابعين (Followers)</option>
+                            <option value="views">مشاهدات (Views)</option>
+                            <option value="likes">إعجابات (Likes)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-link"></i> رابط الحساب أو الفيديو</label>
+                        <input type="url" class="form-control" id="profileLink" placeholder="https://..." required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-sort-amount-up"></i> الكمية</label>
+                            <input type="number" class="form-control" id="quantity" min="100" step="100" value="1000" onchange="calculatePrice()">
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-dollar-sign"></i> السعر</label>
+                            <input type="text" class="form-control" id="totalPrice" value="$9.99" readonly>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-proceed" onclick="showReviewForm()">
+                        <i class="fas fa-arrow-left"></i>
+                        متابعة للدفع
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج التقييم الإجباري -->
+    <div class="review-form-section" id="reviewForm">
+        <h3 style="text-align: center; margin-bottom: 20px;">قبل إتمام العملية</h3>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">نقدر تقييمك لخدماتنا</p>
+        
+        <div class="rating-input">
+            <input type="radio" name="rating" id="star5" value="5">
+            <label for="star5"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" id="star4" value="4">
+            <label for="star4"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" id="star3" value="3">
+            <label for="star3"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" id="star2" value="2">
+            <label for="star2"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" id="star1" value="1">
+            <label for="star1"><i class="fas fa-star"></i></label>
+        </div>
+
+        <div class="form-group">
+            <label>اكتب تعليقك</label>
+            <textarea class="form-control" id="reviewComment" rows="4" placeholder="مشاركتنا تجربتك..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>اسمك (اختياري)</label>
+            <input type="text" class="form-control" id="reviewerName" placeholder="مستخدم">
+        </div>
+
+        <button class="btn-proceed" onclick="submitReviewAndProceed()">
+            إرسال التقييم ومتابعة الدفع
+        </button>
+    </div>
+
+    <!-- الصفحة الثانية: الدفع -->
+    <section class="payment-page" id="paymentPage" style="display: none;">
+        <div class="container">
+            <button class="btn-back" onclick="showPage('order')">العودة</button>
+            
+            <div class="payment-container">
+                <!-- محتوى الدفع مع إخفاء رقم المحفظة -->
+                <div class="payment-form">
+                    <h3>بيانات الدفع</h3>
+                    
+                    <div class="input-group">
+                        <label>رقم محفظتك</label>
+                        <div class="wallet-input-container">
+                            <input type="tel" id="walletNumber" class="form-control" placeholder="أدخل رقم محفظتك" value="01015229611">
+                            <div class="wallet-mask">
+                                <i class="fas fa-lock"></i>
+                                <span id="maskedWallet">•••••••••••</span>
+                            </div>
+                        </div>
+                        <small style="color: #28a745; display: block; margin-top: 5px;">
+                            <i class="fas fa-shield-alt"></i> رقمك مشفر وآمن
+                        </small>
+                    </div>
+                    
+                    <!-- باقي عناصر الدفع -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- إعلان أسفل الصفحة -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">إعلان</div>
+            <!-- اعلان_اسفل_الموقع -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8584077826935053"
+                 data-ad-slot="2904141418"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <script>
+        // تخزين التقييمات
+        let reviews = [
+            {
+                name: 'أحمد محمد',
+                rating: 5,
+                comment: 'خدمة ممتازة وسريعة جداً، حصلت على 5000 متابع في تيك توك خلال ساعات',
+                date: '2024-01-15',
+                platform: 'tiktok'
+            },
+            {
+                name: 'سارة أحمد',
+                rating: 5,
+                comment: 'موقع رائع وأسعار مناسبة، الدعم الفني متعاون جداً',
+                date: '2024-01-14',
+                platform: 'instagram'
+            },
+            {
+                name: 'محمد علي',
+                rating: 4,
+                comment: 'خدمة المشاهدات على يوتيوب ممتازة، ساعدتني في زيادة ظهور فيديوهاتي',
+                date: '2024-01-13',
+                platform: 'youtube'
+            }
+        ];
+
+        // عرض التقييمات
+        function displayReviews() {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+            
+            reviews.forEach(review => {
+                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                
+                const reviewCard = `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">${review.name.charAt(0)}</div>
+                            <div class="review-info">
+                                <h4>${review.name}</h4>
+                                <div class="review-stars">
+                                    ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}
+                                    ${Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"${review.comment}"</p>
+                        <div class="review-date">${review.date}</div>
+                    </div>
+                `;
+                
+                container.innerHTML += reviewCard;
+            });
+        }
+
+        // إظهار نموذج التقييم
+        function showReviewForm() {
+            document.getElementById('orderPage').style.display = 'none';
+            document.getElementById('reviewForm').classList.add('show');
+        }
+
+        // إرسال التقييم والمتابعة
+        function submitReviewAndProceed() {
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const comment = document.getElementById('reviewComment').value;
+            const name = document.getElementById('reviewerName').value || 'مستخدم';
+            
+            if (!rating) {
+                alert('الرجاء اختيار تقييم');
+                return;
+            }
+            
+            if (!comment) {
+                alert('الرجاء كتابة تعليق');
+                return;
+            }
+            
+            // إضافة التقييم الجديد
+            const newReview = {
+                name: name,
+                rating: parseInt(rating.value),
+                comment: comment,
+                date: new Date().toISOString().split('T')[0],
+                platform: document.getElementById('platformSelect').value
+            };
+            
+            reviews.unshift(newReview); // إضافة في البداية
+            displayReviews();
+            
+            // إخفاء نموذج التقييم وإظهار الدفع
+            document.getElementById('reviewForm').classList.remove('show');
+            showPage('payment');
+            
+            // تحديث ملخص الطلب
+            updateOrderSummary();
+        }
+
+        // تحديث ملخص الطلب
+        function updateOrderSummary() {
+            // كود تحديث ملخص الطلب
+        }
+
+        // إظهار الصفحة المطلوبة
+        function showPage(page) {
+            document.getElementById('orderPage').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('reviewForm').classList.remove('show');
+            
+            if (page === 'order') {
+                document.getElementById('orderPage').style.display = 'block';
+            } else if (page === 'payment') {
+                document.getElementById('paymentPage').style.display = 'block';
+            }
+        }
+
+        // إخفاء رقم المحفظة
+        document.getElementById('walletNumber').addEventListener('input', function(e) {
+            const value = e.target.value;
+            const masked = document.getElementById('maskedWallet');
+            
+            if (value.length > 0) {
+                const last4 = value.slice(-4);
+                masked.innerHTML = '••••••••' + last4;
+            } else {
+                masked.innerHTML = '•••••••••••';
+            }
+        });
+
+        // حساب السعر
+        function calculatePrice() {
+            // كود حساب السعر
+        }
+
+        // تحميل الصفحة
+        window.onload = function() {
+            displayReviews();
+            calculatePrice();
+            showPage('order');
+        };
+    </script>
+</body>
+</html>
