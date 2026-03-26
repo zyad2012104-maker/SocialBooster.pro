@@ -9,22 +9,37 @@
     <meta name="description" content="أفضل موقع لزيادة متابعين تيك توك وانستقرام ويوتيوب بسرعة وأمان. خدمات متابعين، مشاهدات، لايكات بأسعار مميزة.">
     <meta name="keywords" content="زيادة متابعين, تيك توك, انستقرام, يوتيوب, مشاهدات, لايكات">
     <meta name="robots" content="index, follow">
+    <meta name="author" content="Social Booster Pro">
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="CdF9V33m4GVklaOXH9BHplOQm7kZMDLSd2CYd-z0eGg" />
 
     <!-- Social -->
     <meta property="og:title" content="Social Booster Pro">
     <meta property="og:description" content="أفضل موقع لزيادة متابعين السوشيال ميديا بسرعة وأمان">
     <meta property="og:url" content="https://zyad2012104-maker.github.io/SocialBooster.pro/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Social Booster Pro">
+    <meta property="og:locale" content="ar_AR">
 
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Social Booster Pro">
+    <meta name="twitter:description" content="أفضل موقع لزيادة متابعين السوشيال ميديا بسرعة وأمان">
 
-    <!-- مهم: حط كودك من جوجل هنا -->
-    <meta name="google-site-verification" content="PUT_YOUR_CODE_HERE">
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="canonical" href="https://zyad2012104-maker.github.io/SocialBooster.pro/">
-
     
     <style>
         * {
@@ -387,8 +402,27 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
 
+        .page-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .page-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         .form-group {
             margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .form-control {
@@ -398,6 +432,11 @@
             border-radius: 12px;
             font-size: 15px;
             font-family: 'Cairo', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
         }
 
         .btn-proceed {
@@ -410,49 +449,19 @@
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .wallet-input-container {
-            position: relative;
+        .btn-proceed:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(40,167,69,0.4);
         }
 
-        .wallet-mask {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            padding: 0 45px;
-            color: #333;
-            font-family: monospace;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .wallet-mask i {
-            margin-left: 10px;
-            color: #28a745;
-        }
-
-        #walletNumber {
-            position: relative;
-            z-index: 2;
-            background: transparent;
-            color: transparent;
-            caret-color: #333;
-        }
-
-        #walletNumber:focus {
-            color: #333;
-        }
-
-        #walletNumber:focus + .wallet-mask {
-            display: none;
+        .sidebar-ads {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
         }
 
         .review-form-section {
@@ -504,6 +513,17 @@
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             display: none;
+            text-align: center;
+        }
+
+        .interstitial-ad button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
@@ -543,13 +563,19 @@
                 left: 10px;
                 padding: 10px 15px;
             }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .sidebar-ads {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- إعلان AMP التلقائي -->
-    <amp-auto-ads type="adsense" data-ad-client="ca-pub-8584077826935053"></amp-auto-ads>
-
     <!-- Header -->
     <header>
         <div class="container header-content">
@@ -582,7 +608,7 @@
         </div>
     </div>
 
-    <!-- إعلان أعلى الموقع -->
+    <!-- إعلان أعلى الموقع - AdSense -->
     <div class="container">
         <div class="ad-container">
             <div class="ad-label">إعلان</div>
@@ -592,7 +618,6 @@
                  data-ad-slot="2904141418"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
@@ -653,8 +678,7 @@
 
     <!-- إعلانات جانبية -->
     <div class="container">
-        <div class="sidebar-ads" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <!-- إعلان جانبي 1 -->
+        <div class="sidebar-ads">
             <div class="ad-container">
                 <div class="ad-label">إعلان</div>
                 <ins class="adsbygoogle"
@@ -662,10 +686,8 @@
                      data-ad-format="autorelaxed"
                      data-ad-client="ca-pub-8584077826935053"
                      data-ad-slot="9040442410"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
 
-            <!-- إعلان جانبي 2 -->
             <div class="ad-container">
                 <div class="ad-label">إعلان</div>
                 <ins class="adsbygoogle"
@@ -674,7 +696,6 @@
                      data-ad-slot="8096225516"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
     </div>
@@ -735,7 +756,6 @@
                  data-ad-format="autorelaxed"
                  data-ad-client="ca-pub-8584077826935053"
                  data-ad-slot="5166809841"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
@@ -794,7 +814,6 @@
                  data-ad-slot="3136510471"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
@@ -813,71 +832,55 @@
              data-ad-format="autorelaxed"
              data-ad-client="ca-pub-8584077826935053"
              data-ad-slot="9165764600"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        <button onclick="closeInterstitialAd()" style="margin-top: 10px; padding: 5px 10px; background: #667eea; color: #fff; border: none; border-radius: 5px; cursor: pointer;">إغلاق</button>
+        <button onclick="closeInterstitialAd()">إغلاق</button>
     </div>
 
     <script>
-        // ===== نظام عداد الزيارات المتزايد (يبدأ من 25500) =====
-        let totalVisitors = 25500; // الرقم الابتدائي
-        let currentVisitorNumber = 25501; // أول زائر
+        // ===== نظام عداد الزيارات المتزايد =====
+        let totalVisitors = 25500;
+        let currentVisitorNumber = 25501;
 
-        // دالة تحديث العداد
         function updateCounters() {
-            // تنسيق الأرقام بفواصل
             const formattedTotal = totalVisitors.toLocaleString();
             const formattedCurrent = currentVisitorNumber.toLocaleString();
             
-            // تحديث جميع العدادات
             document.getElementById('visitorCount').textContent = formattedTotal;
             document.getElementById('stickyVisitorCount').textContent = formattedTotal;
             document.getElementById('visitorNumber').textContent = formattedCurrent;
         }
 
-        // دالة زيادة العداد عند كل زيارة جديدة
         function incrementVisitorCount() {
-            // نزيد العدد الكلي للزوار
-            totalVisitors += 10;
-            
-            // الرقم الحالي للزائر = العدد الكلي - 9 (لأنه يبدأ من 25501)
-            currentVisitorNumber = totalVisitors - 9;
-            
-            // حفظ في localStorage
+            totalVisitors += 1;
+            currentVisitorNumber = totalVisitors;
             saveVisitorData();
-            
-            // تحديث العرض
             updateCounters();
-            
-            // تأثير حركي
             animateCounter();
         }
 
-        // حفظ البيانات
         function saveVisitorData() {
             localStorage.setItem('totalVisitors', totalVisitors);
             localStorage.setItem('lastVisitTime', new Date().getTime());
         }
 
-        // تحميل البيانات
         function loadVisitorData() {
             const savedTotal = localStorage.getItem('totalVisitors');
             if (savedTotal) {
                 totalVisitors = parseInt(savedTotal);
-                currentVisitorNumber = totalVisitors - 9;
+                currentVisitorNumber = totalVisitors;
             }
         }
 
-        // تأثير حركي للعداد
         function animateCounter() {
             const counter = document.querySelector('.visitor-counter .count');
-            counter.style.transform = 'scale(1.2)';
-            counter.style.transition = 'transform 0.3s';
-            setTimeout(() => {
-                counter.style.transform = 'scale(1)';
-            }, 300);
+            if (counter) {
+                counter.style.transform = 'scale(1.2)';
+                counter.style.transition = 'transform 0.3s';
+                setTimeout(() => {
+                    counter.style.transform = 'scale(1)';
+                }, 300);
+            }
         }
 
-        // تحديث وقت الزيارة
         function updateVisitTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('ar-EG', { 
@@ -885,10 +888,12 @@
                 minute: '2-digit',
                 second: '2-digit'
             });
-            document.getElementById('visitTime').textContent = timeString;
+            const visitTimeElement = document.getElementById('visitTime');
+            if (visitTimeElement) {
+                visitTimeElement.textContent = timeString;
+            }
         }
 
-        // التحقق من الزيارة (يتم تنفيذها مرة واحدة لكل جلسة)
         let hasVisitedThisSession = false;
 
         function handleNewVisit() {
@@ -899,28 +904,7 @@
             }
         }
 
-        // تنفيذ عند تحميل الصفحة
-        window.onload = function() {
-            // تحميل البيانات المحفوظة
-            loadVisitorData();
-            
-            // تحديث العدادات
-            updateCounters();
-            
-            // تسجيل الزيارة الجديدة
-            handleNewVisit();
-            
-            // عرض التقييمات
-            displayReviews();
-            
-            // حساب السعر
-            calculatePrice();
-            
-            // إظهار الصفحة الرئيسية
-            showPage('order');
-        };
-
-        // تخزين التقييمات
+        // ===== نظام التقييمات =====
         let reviews = [
             {
                 name: 'أحمد محمد',
@@ -942,7 +926,6 @@
             }
         ];
 
-        // عرض التقييمات
         function displayReviews() {
             const container = document.getElementById('reviewsContainer');
             if (!container) return;
@@ -950,16 +933,16 @@
             container.innerHTML = '';
             
             reviews.forEach(review => {
+                const stars = Array(review.rating).fill('<i class="fas fa-star"></i>').join('') + 
+                             Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('');
+                
                 const reviewCard = `
                     <div class="review-card">
                         <div class="review-header">
                             <div class="review-avatar">${review.name.charAt(0)}</div>
                             <div class="review-info">
                                 <h4>${review.name}</h4>
-                                <div class="review-stars">
-                                    ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}
-                                    ${Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('')}
-                                </div>
+                                <div class="review-stars">${stars}</div>
                             </div>
                         </div>
                         <p class="review-text">"${review.comment}"</p>
@@ -971,13 +954,15 @@
             });
         }
 
-        // إظهار نموذج التقييم
         function showReviewForm() {
-            document.getElementById('orderPage').style.display = 'none';
-            document.getElementById('reviewForm').classList.add('show');
+            const orderPage = document.getElementById('orderPage');
+            const reviewForm = document.getElementById('reviewForm');
+            if (orderPage && reviewForm) {
+                orderPage.style.display = 'none';
+                reviewForm.classList.add('show');
+            }
         }
 
-        // إرسال التقييم والمتابعة
         function submitReviewAndProceed() {
             const rating = document.querySelector('input[name="rating"]:checked');
             const comment = document.getElementById('reviewComment').value;
@@ -988,12 +973,11 @@
                 return;
             }
             
-            if (!comment) {
+            if (!comment.trim()) {
                 alert('الرجاء كتابة تعليق');
                 return;
             }
             
-            // إضافة التقييم الجديد
             const newReview = {
                 name: name,
                 rating: parseInt(rating.value),
@@ -1004,40 +988,40 @@
             reviews.unshift(newReview);
             displayReviews();
             
-            // إخفاء نموذج التقييم
             document.getElementById('reviewForm').classList.remove('show');
-            
-            // إظهار إعلان بين الصفحات
             showInterstitialAd();
             
-            // الانتقال للدفع بعد الإعلان
             setTimeout(() => {
                 closeInterstitialAd();
-                alert('سيتم نقلك لصفحة الدفع');
+                alert('سيتم نقلك لصفحة الدفع\nرابط الدفع: https://example.com/payment');
             }, 3000);
         }
 
-        // إظهار إعلان بين الصفحات
         function showInterstitialAd() {
-            document.getElementById('interstitialAd').style.display = 'block';
-        }
-
-        // إغلاق إعلان بين الصفحات
-        function closeInterstitialAd() {
-            document.getElementById('interstitialAd').style.display = 'none';
-        }
-
-        // إظهار الصفحة المطلوبة
-        function showPage(page) {
-            if (page === 'order') {
-                document.getElementById('orderPage').style.display = 'block';
-                document.getElementById('reviewForm').classList.remove('show');
+            const ad = document.getElementById('interstitialAd');
+            if (ad) {
+                ad.style.display = 'block';
             }
         }
 
-        // حساب السعر
+        function closeInterstitialAd() {
+            const ad = document.getElementById('interstitialAd');
+            if (ad) {
+                ad.style.display = 'none';
+            }
+        }
+
+        function showPage(page) {
+            const orderPage = document.getElementById('orderPage');
+            const reviewForm = document.getElementById('reviewForm');
+            
+            if (page === 'order') {
+                if (orderPage) orderPage.style.display = 'block';
+                if (reviewForm) reviewForm.classList.remove('show');
+            }
+        }
+
         function calculatePrice() {
-            const platform = document.getElementById('platformSelect').value;
             const service = document.getElementById('serviceTypeSelect').value;
             const quantity = parseInt(document.getElementById('quantity').value) || 1000;
             
@@ -1046,24 +1030,21 @@
             if (service === 'likes') basePrice = 2.99;
             
             const total = (quantity / 1000) * basePrice;
-            document.getElementById('totalPrice').value = `$ ${total.toFixed(2)}`;
+            const priceInput = document.getElementById('totalPrice');
+            if (priceInput) {
+                priceInput.value = `$ ${total.toFixed(2)}`;
+            }
         }
 
-        // إخفاء رقم المحفظة
-        if (document.getElementById('walletNumber')) {
-            document.getElementById('walletNumber').addEventListener('input', function(e) {
-                const value = e.target.value;
-                const masked = document.getElementById('maskedWallet');
-                if (masked) {
-                    if (value.length > 0) {
-                        const last4 = value.slice(-4);
-                        masked.innerHTML = '••••••••' + last4;
-                    } else {
-                        masked.innerHTML = '•••••••••••';
-                    }
-                }
-            });
-        }
+        // ===== تنفيذ عند تحميل الصفحة =====
+        window.onload = function() {
+            loadVisitorData();
+            updateCounters();
+            handleNewVisit();
+            displayReviews();
+            calculatePrice();
+            showPage('order');
+        };
     </script>
 </body>
 </html>

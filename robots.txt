@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zyad2012104-maker.github.io/SocialBooster.pro/sitemap.xml
