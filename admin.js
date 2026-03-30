@@ -1,5 +1,30 @@
 // admin.js - لوحة الإدارة الكاملة مع إدارة الإعلانات
 
+// في admin.js - أضف هذه الدوال في البداية
+
+// دالة لحفظ جميع البيانات يدوياً
+async function syncAllData() {
+    showAlert('جاري مزامنة البيانات مع الخادم...', 'info');
+    await saveApps();
+    showAlert('تمت المزامنة بنجاح!', 'success');
+}
+
+// دالة لعرض حالة البيانات
+function showDataStatus() {
+    console.log('=== حالة البيانات ===');
+    console.log(`التطبيقات: ${apps.length}`);
+    console.log(`المستخدمين: ${users.length}`);
+    console.log(`التعليقات: ${comments.length}`);
+    console.log(`التصنيفات: ${categories.length}`);
+    console.log('====================');
+    
+    showAlert(`📊 التطبيقات: ${apps.length} | المستخدمين: ${users.length} | التعليقات: ${comments.length}`, 'info');
+}
+
+// أضف زر للمزامنة في لوحة التحكم
+// يمكن إضافته في HTML الخاص بلوحة الإدارة
+
+
 let currentAdminPanel = 'users';
 let editingModeratorId = null;
 

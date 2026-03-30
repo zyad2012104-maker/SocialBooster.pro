@@ -1,4 +1,4 @@
-// common.js - الملف الرئيسي للبيانات والدوال المشتركة
+// common.js - الملف الرئيسي للبيانات والدوال المشتركة مع إصلاح مشكلة المزامنة
 
 // ========== المتغيرات العامة ==========
 let apps = [];
@@ -20,11 +20,21 @@ async function loadApps() {
     try {
         console.log("🔄 جاري تحميل البيانات من JSONBin...");
         
+        // عرض رسالة تحميل
+        const loadingEl = document.getElementById("loadingMessage");
+        if (loadingEl) loadingEl.style.display = "block";
+        
         const response = await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}/latest`, {
+            method: "GET",
             headers: {
-                "X-Master-Key": CONFIG.JSONBIN.MASTER_KEY
+                "X-Master-Key": CONFIG.JSONBIN.MASTER_KEY,
+                "Content-Type": "application/json"
             }
         });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         
         const data = await response.json();
         console.log("📦 البيانات المستلمة من JSONBin:", data);
@@ -33,15 +43,19 @@ async function loadApps() {
             // تحميل التطبيقات
             if (Array.isArray(data.record.apps)) {
                 apps = data.record.apps;
+                console.log(`✅ تم تحميل ${apps.length} تطبيق من JSONBin`);
             } else if (Array.isArray(data.record)) {
                 apps = data.record;
+                console.log(`✅ تم تحميل ${apps.length} تطبيق من JSONBin (كمصفوفة)`);
             } else {
                 apps = [];
+                console.log("⚠️ لا توجد تطبيقات في JSONBin");
             }
             
             // تحميل المستخدمين
             if (Array.isArray(data.record.users)) {
                 users = data.record.users;
+                console.log(`✅ تم تحميل ${users.length} مستخدم من JSONBin`);
             } else {
                 users = [];
             }
@@ -49,6 +63,7 @@ async function loadApps() {
             // تحميل التعليقات
             if (Array.isArray(data.record.comments)) {
                 comments = data.record.comments;
+                console.log(`✅ تم تحميل ${comments.length} تعليق من JSONBin`);
             } else {
                 comments = [];
             }
@@ -56,6 +71,7 @@ async function loadApps() {
             // تحميل التصنيفات
             if (Array.isArray(data.record.categories)) {
                 categories = data.record.categories;
+                console.log(`✅ تم تحميل ${categories.length} تصنيف من JSONBin`);
             } else if (Array.isArray(data.record.categoriesList)) {
                 categories = data.record.categoriesList;
             } else {
@@ -67,14 +83,18 @@ async function loadApps() {
                     { key: 'productivity', name: 'إنتاجية', icon: '💼' },
                     { key: 'entertainment', name: 'ترفيه', icon: '🎬' }
                 ];
+                console.log("⚠️ تم استخدام التصنيفات الافتراضية");
             }
             
             // تحميل إعدادات الإعلانات
             if (data.record.adSettings) {
                 adSettings = { ...adSettings, ...data.record.adSettings };
+                console.log("✅ تم تحميل إعدادات الإعلانات");
             }
             
-            console.log(`✅ تم التحميل: ${apps.length} تطبيق، ${users.length} مستخدم، ${comments.length} تعليق، ${categories.length} تصنيف`);
+            // حفظ نسخة محلية احتياطية
+            saveLocalData();
+            
         } else {
             console.log("⚠️ لا توجد بيانات في JSONBin، سيتم استخدام البيانات المحلية");
             loadLocalData();
@@ -94,20 +114,23 @@ async function loadApps() {
             await saveUsers();
         }
         
-        // حفظ نسخة محلية احتياطية
-        saveLocalData();
-        
         jsonbinReady = true;
         
-        // إزالة رسالة التحميل
-        const loadingEl = document.getElementById("loadingMessage");
+        // إخفاء رسالة التحميل
         if (loadingEl) loadingEl.style.display = "none";
+        
+        // تحديث واجهة المستخدم
+        if (typeof updateUI === 'function') updateUI();
         
     } catch (error) {
         console.error("❌ خطأ في تحميل البيانات:", error);
         console.log("📦 سيتم استخدام البيانات المحلية كحل بديل");
         loadLocalData();
         jsonbinReady = true;
+        
+        // إخفاء رسالة التحميل
+        const loadingEl = document.getElementById("loadingMessage");
+        if (loadingEl) loadingEl.style.display = "none";
     }
 }
 
@@ -115,7 +138,45 @@ async function loadApps() {
 function loadLocalData() {
     try {
         let localApps = localStorage.getItem("apps");
-        if (localApps) apps = JSON.parse(localApps);
+        if (localApps) {
+            apps = JSON.parse(localApps);
+            console.log(`📦 تم تحميل ${apps.length} تطبيق من localStorage`);
+        } else {
+            // بيانات تجريبية للتأكد من ظهور شيء
+            apps = [
+                {
+                    id: 1,
+                    name: "تطبيق تجريبي 1",
+                    description: "هذا تطبيق تجريبي للتأكد من عمل الموقع",
+                    version: "1.0.0",
+                    category: "games",
+                    deviceType: "android",
+                    size: "25 MB",
+                    image: "https://placehold.co/300x200/667eea/white?text=App1",
+                    downloadLink: "#",
+                    downloads: 100,
+                    rating: 4.5,
+                    ratings: [5,4,5,4,5],
+                    date: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    name: "تطبيق تجريبي 2",
+                    description: "هذا تطبيق تجريبي ثانٍ للتأكد من عمل الموقع",
+                    version: "2.0.0",
+                    category: "social",
+                    deviceType: "both",
+                    size: "45 MB",
+                    image: "https://placehold.co/300x200/764ba2/white?text=App2",
+                    downloadLink: "#",
+                    downloads: 50,
+                    rating: 4.0,
+                    ratings: [4,4,5,4,3],
+                    date: new Date().toISOString()
+                }
+            ];
+            console.log("📦 تم إنشاء بيانات تجريبية");
+        }
         
         let localUsers = localStorage.getItem("users");
         if (localUsers) users = JSON.parse(localUsers);
@@ -140,7 +201,6 @@ function loadLocalData() {
             ];
         }
         
-        console.log(`📦 تم التحميل من localStorage: ${apps.length} تطبيق`);
     } catch (e) {
         console.error("خطأ في تحميل البيانات المحلية:", e);
     }
@@ -153,15 +213,57 @@ function saveLocalData() {
     localStorage.setItem("comments", JSON.stringify(comments));
     localStorage.setItem("categories", JSON.stringify(categories));
     localStorage.setItem("adSettings", JSON.stringify(adSettings));
+    console.log("💾 تم حفظ البيانات محلياً");
 }
 
-// ========== حفظ التطبيقات ==========
+// ========== حفظ التطبيقات (مزامنة مع JSONBin) ==========
 async function saveApps() {
     try {
         console.log("💾 جاري حفظ التطبيقات على JSONBin...");
         
+        // حفظ نسخة محلية أولاً
         saveLocalData();
         
+        // إعداد البيانات الكاملة للحفظ
+        const fullData = {
+            apps: apps,
+            users: users,
+            comments: comments,
+            categories: categories,
+            adSettings: adSettings,
+            lastUpdated: new Date().toISOString()
+        };
+        
+        console.log("📤 البيانات المراد حفظها:", fullData);
+        
+        const response = await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Master-Key": CONFIG.JSONBIN.MASTER_KEY
+            },
+            body: JSON.stringify(fullData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log("✅ تم حفظ البيانات بنجاح على JSONBin:", data);
+        
+        showAlert("✅ تم حفظ البيانات ومزامنتها مع الخادم", "success");
+        
+    } catch (error) {
+        console.error("❌ خطأ في حفظ البيانات على JSONBin:", error);
+        showAlert("⚠️ تم الحفظ محلياً فقط. سيتم المزامنة عند الاتصال.", "error");
+    }
+}
+
+// ========== حفظ المستخدمين ==========
+async function saveUsers() {
+    saveLocalData();
+    try {
         const fullData = {
             apps: apps,
             users: users,
@@ -180,37 +282,9 @@ async function saveApps() {
             body: JSON.stringify(fullData)
         });
         
-        const data = await response.json();
-        console.log("✅ تم حفظ البيانات بنجاح:", data);
-        
-    } catch (error) {
-        console.error("❌ خطأ في حفظ البيانات:", error);
-        showAlert("تم الحفظ محلياً فقط بسبب مشكلة في الاتصال", "error");
-    }
-}
-
-// ========== حفظ المستخدمين ==========
-async function saveUsers() {
-    saveLocalData();
-    try {
-        const fullData = {
-            apps: apps,
-            users: users,
-            comments: comments,
-            categories: categories,
-            adSettings: adSettings,
-            lastUpdated: new Date().toISOString()
-        };
-        
-        await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Master-Key": CONFIG.JSONBIN.MASTER_KEY
-            },
-            body: JSON.stringify(fullData)
-        });
-        console.log("✅ تم حفظ المستخدمين");
+        if (response.ok) {
+            console.log("✅ تم حفظ المستخدمين على JSONBin");
+        }
     } catch (error) {
         console.error("❌ خطأ في حفظ المستخدمين:", error);
     }
@@ -229,7 +303,7 @@ async function saveComments() {
             lastUpdated: new Date().toISOString()
         };
         
-        await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
+        const response = await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -237,7 +311,10 @@ async function saveComments() {
             },
             body: JSON.stringify(fullData)
         });
-        console.log("✅ تم حفظ التعليقات");
+        
+        if (response.ok) {
+            console.log("✅ تم حفظ التعليقات على JSONBin");
+        }
     } catch (error) {
         console.error("❌ خطأ في حفظ التعليقات:", error);
     }
@@ -256,7 +333,7 @@ async function saveCategories() {
             lastUpdated: new Date().toISOString()
         };
         
-        await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
+        const response = await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -264,7 +341,10 @@ async function saveCategories() {
             },
             body: JSON.stringify(fullData)
         });
-        console.log("✅ تم حفظ التصنيفات");
+        
+        if (response.ok) {
+            console.log("✅ تم حفظ التصنيفات على JSONBin");
+        }
     } catch (error) {
         console.error("❌ خطأ في حفظ التصنيفات:", error);
     }
@@ -283,7 +363,7 @@ async function saveAdSettings() {
             lastUpdated: new Date().toISOString()
         };
         
-        await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
+        const response = await fetch(`${CONFIG.JSONBIN.BASE_URL}${CONFIG.JSONBIN.BIN_ID}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -291,7 +371,10 @@ async function saveAdSettings() {
             },
             body: JSON.stringify(fullData)
         });
-        console.log("✅ تم حفظ إعدادات الإعلانات");
+        
+        if (response.ok) {
+            console.log("✅ تم حفظ إعدادات الإعلانات على JSONBin");
+        }
     } catch (error) {
         console.error("❌ خطأ في حفظ إعدادات الإعلانات:", error);
     }
@@ -357,7 +440,7 @@ function executeAdScripts(container) {
     }
 }
 
-// ========== عرض نافذة الإعلان عند النقر على تحميل ==========
+// ========== عرض نافذة الإعلان ==========
 function showClickAd() {
     if (adSettings.clickAd && adSettings.clickAd.trim()) {
         const modal = document.getElementById('adModal');
@@ -473,7 +556,7 @@ function logout() {
     window.location.href = 'index.html';
 }
 
-// ========== إنشاء بطاقة التطبيق (مع زر تفاصيل بدلاً من تحميل) ==========
+// ========== إنشاء بطاقة التطبيق ==========
 function createAppCard(app) {
     const stars = '★'.repeat(Math.floor(app.rating || 0)) + '☆'.repeat(5 - Math.floor(app.rating || 0));
     const imageUrl = app.image && app.image.startsWith('http') ? app.image : 'https://placehold.co/300x200/667eea/white?text=' + encodeURIComponent(app.name);
@@ -499,7 +582,7 @@ function createAppCard(app) {
     `;
 }
 
-// ========== تنزيل التطبيق (يستخدم في صفحة التفاصيل) ==========
+// ========== تنزيل التطبيق ==========
 async function downloadApp(appId) {
     const app = apps.find(a => a.id === appId);
     if (!app) return;
@@ -537,22 +620,58 @@ function subscribeNewsletter() {
     }
 }
 
+// ========== تحديث واجهة المستخدم ==========
+function updateUI() {
+    console.log("🔄 تحديث واجهة المستخدم...");
+    console.log(`📱 عدد التطبيقات المتاحة: ${apps.length}`);
+    
+    // تحديث شريط التنقل
+    updateNavBar();
+    
+    // إعادة عرض الإعلانات
+    renderAds();
+    
+    // إطلاق حدث مخصص لإعلام الصفحات بتحديث البيانات
+    const event = new CustomEvent('dataUpdated', { detail: { apps, users, comments, categories } });
+    window.dispatchEvent(event);
+}
+
 // ========== تهيئة الصفحة ==========
 async function initCommon() {
+    console.log("🚀 بدء تهيئة common.js...");
+    
+    // عرض رسالة تحميل
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'loadingMessage';
+    loadingDiv.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:9999;text-align:center;';
+    loadingDiv.innerHTML = '<div class="spinner" style="width:40px;height:40px;margin:0 auto 10px;"></div><p>جاري تحميل البيانات...</p>';
+    document.body.appendChild(loadingDiv);
+    
     await loadApps();
     loadCurrentUser();
     updateNavBar();
     renderAds();
     
+    // إزالة رسالة التحميل
+    const loadingMsg = document.getElementById('loadingMessage');
+    if (loadingMsg) loadingMsg.remove();
+    
+    console.log("✅ تم تهيئة common.js بنجاح");
+    console.log(`📱 التطبيقات المتاحة: ${apps.length}`);
+    
+    // تحديث كل 30 ثانية
     setInterval(async () => {
+        console.log("🔄 تحديث تلقائي للبيانات...");
         await loadApps();
         updateNavBar();
         renderAds();
     }, 30000);
 }
 
+// بدء التشغيل
 initCommon();
 
+// جعل الدوال متاحة عالمياً
 window.showAlert = showAlert;
 window.escapeHtml = escapeHtml;
 window.getCategoryName = getCategoryName;
@@ -567,3 +686,9 @@ window.closeAdModal = closeAdModal;
 window.showClickAd = showClickAd;
 window.renderAds = renderAds;
 window.createAppCard = createAppCard;
+window.updateUI = updateUI;
+window.saveApps = saveApps;
+window.saveUsers = saveUsers;
+window.saveComments = saveComments;
+window.saveCategories = saveCategories;
+window.saveAdSettings = saveAdSettings;
