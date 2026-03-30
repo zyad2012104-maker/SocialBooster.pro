@@ -1,4 +1,4 @@
-// common.js - الملف الرئيسي للبيانات والدوال المشتركة مع إدارة الإعلانات
+// common.js - الملف الرئيسي للبيانات والدوال المشتركة
 
 // ========== المتغيرات العامة ==========
 let apps = [];
@@ -160,10 +160,8 @@ async function saveApps() {
     try {
         console.log("💾 جاري حفظ التطبيقات على JSONBin...");
         
-        // حفظ نسخة محلية
         saveLocalData();
         
-        // إعداد البيانات الكاملة للحفظ
         const fullData = {
             apps: apps,
             users: users,
@@ -299,11 +297,10 @@ async function saveAdSettings() {
     }
 }
 
-// ========== عرض الإعلانات (يتم استدعاؤها في كل صفحة) ==========
+// ========== عرض الإعلانات ==========
 function renderAds() {
     console.log("📢 جاري عرض الإعلانات...");
     
-    // إعلان أعلى الصفحة
     const topContainer = document.getElementById('topAdContainer');
     if (topContainer) {
         if (adSettings.topBanner && adSettings.topBanner.trim()) {
@@ -314,7 +311,6 @@ function renderAds() {
         }
     }
     
-    // إعلان أسفل الصفحة
     const bottomContainer = document.getElementById('bottomAdContainer');
     if (bottomContainer) {
         if (adSettings.bottomBanner && adSettings.bottomBanner.trim()) {
@@ -325,7 +321,6 @@ function renderAds() {
         }
     }
     
-    // إعلان جانبي أيسر
     const leftContainer = document.getElementById('leftAdContainer');
     if (leftContainer) {
         if (adSettings.leftSidebar && adSettings.leftSidebar.trim()) {
@@ -336,7 +331,6 @@ function renderAds() {
         }
     }
     
-    // إعلان جانبي أيمن
     const rightContainer = document.getElementById('rightAdContainer');
     if (rightContainer) {
         if (adSettings.rightSidebar && adSettings.rightSidebar.trim()) {
@@ -431,7 +425,6 @@ function loadCurrentUser() {
     if (stored) {
         try {
             currentUser = JSON.parse(stored);
-            // التحقق من وجود المستخدم في القائمة (للتحديثات)
             const found = users.find(u => u.id === currentUser.id);
             if (found) {
                 currentUser = found;
@@ -480,7 +473,7 @@ function logout() {
     window.location.href = 'index.html';
 }
 
-// ========== إنشاء بطاقة التطبيق ==========
+// ========== إنشاء بطاقة التطبيق (مع زر تفاصيل بدلاً من تحميل) ==========
 function createAppCard(app) {
     const stars = '★'.repeat(Math.floor(app.rating || 0)) + '☆'.repeat(5 - Math.floor(app.rating || 0));
     const imageUrl = app.image && app.image.startsWith('http') ? app.image : 'https://placehold.co/300x200/667eea/white?text=' + encodeURIComponent(app.name);
@@ -500,25 +493,22 @@ function createAppCard(app) {
                     <span class="app-card-rating">${stars} (${(app.rating || 0).toFixed(1)})</span>
                     <span>${getCategoryIcon(app.category)} ${getCategoryName(app.category)}</span>
                 </div>
-                <button class="app-card-download" onclick="event.stopPropagation(); downloadApp(${app.id})">📥 تحميل</button>
+                <button class="app-card-download" onclick="event.stopPropagation(); window.location.href='app-detail.html?id=${app.id}'">📖 تفاصيل التطبيق</button>
             </div>
         </div>
     `;
 }
 
-// ========== تنزيل التطبيق ==========
+// ========== تنزيل التطبيق (يستخدم في صفحة التفاصيل) ==========
 async function downloadApp(appId) {
     const app = apps.find(a => a.id === appId);
     if (!app) return;
     
-    // عرض إعلان عند النقر
     showClickAd();
     
-    // زيادة عدد التحميلات
     app.downloads = (app.downloads || 0) + 1;
     await saveApps();
     
-    // فتح رابط التحميل
     if (app.downloadLink && app.downloadLink.startsWith('http')) {
         window.open(app.downloadLink, '_blank');
     } else {
@@ -552,20 +542,17 @@ async function initCommon() {
     await loadApps();
     loadCurrentUser();
     updateNavBar();
-    renderAds(); // عرض الإعلانات تلقائياً
+    renderAds();
     
-    // تحديث كل 30 ثانية
     setInterval(async () => {
         await loadApps();
         updateNavBar();
-        renderAds(); // تحديث الإعلانات
+        renderAds();
     }, 30000);
 }
 
-// بدء التشغيل
 initCommon();
 
-// جعل الدوال متاحة عالمياً
 window.showAlert = showAlert;
 window.escapeHtml = escapeHtml;
 window.getCategoryName = getCategoryName;
@@ -579,3 +566,4 @@ window.subscribeNewsletter = subscribeNewsletter;
 window.closeAdModal = closeAdModal;
 window.showClickAd = showClickAd;
 window.renderAds = renderAds;
+window.createAppCard = createAppCard;

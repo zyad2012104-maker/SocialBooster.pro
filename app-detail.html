@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AppNova - تفاصيل التطبيق</title>
-    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="تفاصيل التطبيق">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* أنماط إضافية لصفحة التفاصيل */
         .app-detail-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -23,12 +22,24 @@
             color: white;
         }
 
+        .app-header-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+        }
+
         .app-icon-large {
             width: 120px;
             height: 120px;
             border-radius: 25px;
-            object-fit: cover;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            object-fit: cover;
+        }
+
+        .app-info h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
 
         .app-meta {
@@ -37,18 +48,27 @@
             gap: 15px;
             margin-top: 15px;
         }
-        
+
         .app-meta span {
             background: rgba(255,255,255,0.2);
             padding: 5px 12px;
             border-radius: 50px;
+            font-size: 0.9rem;
         }
-        
+
         .stars {
             color: #fbbf24;
             font-size: 1.2rem;
         }
-        
+
+        .app-body {
+            padding: 30px;
+        }
+
+        .app-actions {
+            margin-bottom: 30px;
+        }
+
         .download-btn {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
@@ -60,15 +80,13 @@
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
-            margin-bottom: 30px;
         }
-        
+
         .download-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
-        
-        /* قسم معرض الصور الجديد (أفقي مثل جوجل بلاي) */
+
         .screenshots-section {
             margin: 30px 0 40px 0;
         }
@@ -85,7 +103,6 @@
             overflow-x: auto;
             padding-bottom: 10px;
             scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
         }
         
         .screenshots-scroll::-webkit-scrollbar {
@@ -109,7 +126,7 @@
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
@@ -124,7 +141,6 @@
             object-fit: cover;
         }
         
-        /* نافذة عرض الصور بملء الشاشة */
         .image-modal {
             display: none;
             position: fixed;
@@ -134,7 +150,6 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.95);
-            animation: fadeIn 0.3s;
         }
         
         .image-modal-content {
@@ -151,7 +166,6 @@
             max-height: 80vh;
             object-fit: contain;
             border-radius: 12px;
-            animation: zoomIn 0.3s;
         }
         
         .close-modal {
@@ -161,13 +175,11 @@
             color: white;
             font-size: 40px;
             cursor: pointer;
-            transition: all 0.3s;
             z-index: 2001;
         }
         
         .close-modal:hover {
             color: #fbbf24;
-            transform: scale(1.1);
         }
         
         .nav-btn {
@@ -181,13 +193,11 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 24px;
-            transition: all 0.3s;
             z-index: 2001;
         }
         
         .nav-btn:hover {
             background: rgba(255,255,255,0.5);
-            transform: translateY(-50%) scale(1.1);
         }
         
         .prev-btn { left: 20px; }
@@ -203,35 +213,59 @@
             font-size: 14px;
             background: rgba(0,0,0,0.5);
             padding: 8px;
-            margin: 0 auto;
             width: fit-content;
+            margin: 0 auto;
             border-radius: 20px;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .app-description {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            line-height: 1.8;
         }
         
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .rating-section {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
         }
         
-        @media (max-width: 768px) {
-            .screenshot-item {
-                width: 200px;
-                height: 360px;
-            }
-            .close-modal {
-                top: 10px;
-                right: 20px;
-                font-size: 30px;
-            }
-            .nav-btn {
-                padding: 10px 15px;
-                font-size: 18px;
-            }
+        .rating-stats {
+            margin: 20px 0;
+        }
+        
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .rating-bar-label {
+            width: 60px;
+            color: #fbbf24;
+        }
+        
+        .rating-bar-bg {
+            flex: 1;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .rating-bar-fill {
+            height: 100%;
+            background: #fbbf24;
+            border-radius: 4px;
+        }
+        
+        .rating-bar-count {
+            width: 40px;
+            color: #64748b;
         }
         
         .comment-card {
@@ -241,11 +275,76 @@
             margin-bottom: 15px;
         }
         
-        .rating-bar {
+        .comment-header {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            color: #64748b;
+        }
+        
+        .comment-rating {
+            color: #fbbf24;
+        }
+        
+        .add-comment {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .add-comment input,
+        .add-comment textarea,
+        .add-comment select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+        }
+        
+        .add-comment button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .similar-apps {
+            margin-top: 40px;
+        }
+        
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .similar-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .similar-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .similar-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
         }
         
         .loading-spinner {
@@ -268,6 +367,26 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .app-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .screenshot-item {
+                width: 200px;
+                height: 360px;
+            }
+            .close-modal {
+                top: 10px;
+                right: 20px;
+                font-size: 30px;
+            }
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -351,7 +470,6 @@
         </div>
     </div>
 
-    <!-- نافذة عرض الصور -->
     <div id="imageModal" class="image-modal">
         <div class="image-modal-content">
             <span class="close-modal" onclick="closeImageModal()">&times;</span>

@@ -55,7 +55,6 @@ function renderRatingBars(ratings) {
     return html;
 }
 
-// دوال عرض الصور في النافذة المنبثقة
 function openImageModal(index) {
     if (!galleryImages || galleryImages.length === 0) return;
     currentImageIndex = index;
@@ -100,45 +99,30 @@ function prevImage() {
     }
 }
 
-// دالة استخراج صور المعرض من التطبيق (تدعم عدة تنسيقات)
 function extractGalleryImages(app) {
     let images = [];
     
-    // محاولة الحصول على الصور من مصادر مختلفة
     if (app.gallery && Array.isArray(app.gallery) && app.gallery.length > 0) {
         console.log('✅ تم العثور على صور في app.gallery:', app.gallery);
         images = app.gallery;
-    }
-    // إذا كان هناك صور منفصلة (screenshots)
-    else if (app.screenshots && Array.isArray(app.screenshots) && app.screenshots.length > 0) {
+    } else if (app.screenshots && Array.isArray(app.screenshots) && app.screenshots.length > 0) {
         console.log('✅ تم العثور على صور في app.screenshots:', app.screenshots);
         images = app.screenshots;
-    }
-    // إذا كان هناك صور منفصلة (images)
-    else if (app.images && Array.isArray(app.images) && app.images.length > 0) {
+    } else if (app.images && Array.isArray(app.images) && app.images.length > 0) {
         console.log('✅ تم العثور على صور في app.images:', app.images);
         images = app.images;
-    }
-    // إذا كانت الصورة الرئيسية موجودة، نضيفها كصورة افتراضية
-    else if (app.image && app.image.startsWith('http')) {
+    } else if (app.image && app.image.startsWith('http')) {
         console.log('⚠️ لا توجد صور معرض، سيتم استخدام الصورة الرئيسية');
         images = [app.image];
     }
-    // إذا كان هناك أيقونة
-    else if (app.icon && app.icon.startsWith('http')) {
-        console.log('⚠️ لا توجد صور معرض، سيتم استخدام الأيقونة');
-        images = [app.icon];
-    }
     
-    // تنظيف الصور (إزالة الروابط الفارغة أو غير الصالحة)
-    images = images.filter(img => img && img.trim() !== '' && (img.startsWith('http') || img.startsWith('https') || img.startsWith('data:')));
+    images = images.filter(img => img && img.trim() !== '' && (img.startsWith('http') || img.startsWith('https')));
     
     console.log(`📸 تم استخراج ${images.length} صورة للتطبيق:`, images);
     
     return images;
 }
 
-// دالة عرض معرض الصور الأفقي (مثل جوجل بلاي)
 function renderHorizontalGallery(images) {
     if (!images || images.length === 0) {
         return `
@@ -146,8 +130,6 @@ function renderHorizontalGallery(images) {
                 <h3>📸 لقطات الشاشة</h3>
                 <div style="background: #f8fafc; border-radius: 16px; padding: 40px; text-align: center; color: #64748b;">
                     📸 لا توجد صور مضافة للتطبيق
-                    <br>
-                    <small style="display: block; margin-top: 10px;">يمكن للمطور إضافة صور من خلال صفحة رفع التطبيق</small>
                 </div>
             </div>
         `;
@@ -165,7 +147,7 @@ function renderHorizontalGallery(images) {
         html += `
             <div class="screenshot-item" onclick="openImageModal(${idx})">
                 <img src="${img}" 
-                     onerror="this.src='https://placehold.co/280x500/ef4444/white?text=خطأ+في+تحميل+الصورة'"
+                     onerror="this.src='https://placehold.co/280x500/ef4444/white?text=خطأ'"
                      alt="لقطة شاشة ${idx + 1}">
             </div>
         `;
@@ -179,7 +161,6 @@ function renderHorizontalGallery(images) {
     return html;
 }
 
-// عرض تفاصيل التطبيق
 function displayAppDetails() {
     console.log('🎨 عرض تفاصيل التطبيق');
     
@@ -199,11 +180,9 @@ function displayAppDetails() {
     }
     
     console.log('✅ التطبيق:', app);
-    console.log('📦 بيانات التطبيق الكاملة:', JSON.stringify(app, null, 2));
     
     currentApp = app;
     
-    // استخراج صور المعرض
     const galleryImagesList = extractGalleryImages(app);
     
     const totalRatings = app.ratings ? app.ratings.length : 0;
@@ -213,7 +192,6 @@ function displayAppDetails() {
         avgRating = (sum / totalRatings).toFixed(1);
     }
     
-    // عرض معرض الصور الأفقي
     const galleryHtml = renderHorizontalGallery(galleryImagesList);
     
     const appComments = comments.filter(c => c.appId === app.id);
@@ -221,9 +199,9 @@ function displayAppDetails() {
         '<p style="text-align:center;padding:30px;background:#f8fafc;border-radius:16px;">💬 لا توجد تعليقات بعد</p>' :
         appComments.map(c => `
             <div class="comment-card">
-                <div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;color:#64748b;">
+                <div class="comment-header">
                     <span><strong>${escapeHtml(c.username)}</strong></span>
-                    <span style="color:#fbbf24;">${renderStars(c.rating)}</span>
+                    <span class="comment-rating">${renderStars(c.rating)}</span>
                     <span>${new Date(c.date).toLocaleDateString('ar-EG')}</span>
                 </div>
                 <div>${escapeHtml(c.comment)}</div>
@@ -232,15 +210,35 @@ function displayAppDetails() {
     
     const appIcon = app.icon || app.image || 'https://placehold.co/120x120/667eea/white?text=' + encodeURIComponent(app.name);
     
+    // تطبيقات مشابهة
+    let similarApps = apps.filter(a => a.category === app.category && a.id !== app.id).slice(0, 4);
+    let similarAppsHtml = '';
+    if (similarApps.length > 0) {
+        similarAppsHtml = `
+            <div class="similar-apps">
+                <h3>📱 تطبيقات مشابهة</h3>
+                <div class="similar-grid">
+                    ${similarApps.map(similar => `
+                        <div class="similar-card" onclick="window.location.href='app-detail.html?id=${similar.id}'">
+                            <img src="${similar.image}" onerror="this.src='https://placehold.co/200x100/cccccc/white?text=No+Image'">
+                            <div style="font-weight: bold; margin-top: 8px;">${escapeHtml(similar.name)}</div>
+                            <div style="color: #fbbf24;">⭐ ${(similar.rating || 0).toFixed(1)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
     container.innerHTML = `
         <div class="app-detail-container">
             <div class="app-header">
-                <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:center;">
+                <div class="app-header-content">
                     <img src="${appIcon}" class="app-icon-large" onerror="this.src='https://placehold.co/120x120/cccccc/white?text=No+Image'">
-                    <div>
-                        <h1 style="font-size:2rem;margin-bottom:10px;">${escapeHtml(app.name)}</h1>
-                        <p style="opacity:0.9;">${escapeHtml(app.developer || app.userName || "مطور")}</p>
-                        <div style="color:#fbbf24;font-size:1.2rem;margin:10px 0;">${renderStars(avgRating)}</div>
+                    <div class="app-info">
+                        <h1>${escapeHtml(app.name)}</h1>
+                        <p>${escapeHtml(app.developer || app.userName || "مطور")}</p>
+                        <div class="stars">${renderStars(avgRating)}</div>
                         <div class="app-meta">
                             <span>⭐ ${avgRating}</span>
                             <span>📊 ${totalRatings} تقييم</span>
@@ -253,17 +251,19 @@ function displayAppDetails() {
                 </div>
             </div>
             
-            <div style="padding:30px;">
-                <button onclick="downloadApp(${app.id})" class="download-btn">📥 تحميل التطبيق</button>
+            <div class="app-body">
+                <div class="app-actions">
+                    <button onclick="downloadApp(${app.id})" class="download-btn">📥 تحميل التطبيق</button>
+                </div>
                 
                 ${galleryHtml}
                 
-                <div style="background:#f8fafc;border-radius:16px;padding:25px;margin:20px 0;">
+                <div class="app-description">
                     <h2>📄 وصف التطبيق</h2>
                     <p style="line-height:1.8;">${escapeHtml(app.description || 'لا يوجد وصف للتطبيق')}</p>
                 </div>
                 
-                <div style="background:#f8fafc;border-radius:16px;padding:25px;margin:20px 0;">
+                <div class="rating-section">
                     <h3>📊 إحصائيات التقييمات</h3>
                     <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:center;">
                         <div style="text-align:center;">
@@ -277,20 +277,22 @@ function displayAppDetails() {
                 
                 <div>
                     <h2>💬 التعليقات</h2>
-                    <div style="background:#f8fafc;border-radius:16px;padding:25px;margin:20px 0;">
-                        <input type="text" id="commentName" placeholder="اسمك" style="width:100%;padding:12px;margin-bottom:10px;border:2px solid #e2e8f0;border-radius:12px;" value="${currentUser ? escapeHtml(currentUser.username) : ''}">
-                        <select id="commentRating" style="width:100%;padding:12px;margin-bottom:10px;border:2px solid #e2e8f0;border-radius:12px;">
+                    <div class="add-comment">
+                        <input type="text" id="commentName" placeholder="اسمك" value="${currentUser ? escapeHtml(currentUser.username) : ''}">
+                        <select id="commentRating">
                             <option value="5">⭐⭐⭐⭐⭐ ممتاز</option>
                             <option value="4">⭐⭐⭐⭐ جيد جداً</option>
                             <option value="3">⭐⭐⭐ جيد</option>
                             <option value="2">⭐⭐ مقبول</option>
                             <option value="1">⭐ ضعيف</option>
                         </select>
-                        <textarea id="commentText" rows="3" placeholder="اكتب تعليقك..." style="width:100%;padding:12px;margin-bottom:10px;border:2px solid #e2e8f0;border-radius:12px;"></textarea>
-                        <button onclick="addComment(${app.id})" class="submit-btn" style="width:auto;padding:10px 25px;">📝 إرسال</button>
+                        <textarea id="commentText" rows="3" placeholder="اكتب تعليقك..."></textarea>
+                        <button onclick="addComment(${app.id})">📝 إرسال التعليق</button>
                     </div>
                     <div id="commentsList">${commentsHtml}</div>
                 </div>
+                
+                ${similarAppsHtml}
             </div>
         </div>
     `;
@@ -319,15 +321,12 @@ async function addComment(appId) {
     displayAppDetails();
 }
 
-// ربط الدوال بالـ window لاستخدامها في HTML
 window.openImageModal = openImageModal;
 window.closeImageModal = closeImageModal;
 window.nextImage = nextImage;
 window.prevImage = prevImage;
 window.addComment = addComment;
-window.downloadApp = downloadApp;
 
-// انتظار تحميل البيانات
 let checkInterval = setInterval(function() {
     if (typeof apps !== 'undefined' && apps.length > 0) {
         clearInterval(checkInterval);
@@ -335,7 +334,5 @@ let checkInterval = setInterval(function() {
         displayAppDetails();
     } else if (typeof apps !== 'undefined') {
         console.log('⏳ انتظار تحميل البيانات... عدد التطبيقات:', apps.length);
-    } else {
-        console.log('⏳ انتظار تحميل المتغير apps...');
     }
 }, 500);
