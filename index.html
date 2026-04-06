@@ -543,10 +543,84 @@
             .target-number { font-size: 22px; }
         }
     </style>
+
+    <!-- خصم اليوم -->
+    <style>
+        /* شريط الخصم العلوي */
+        .discount-bar {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #fff;
+            text-align: center;
+            padding: 12px 20px;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+        
+        .discount-bar i {
+            margin: 0 8px;
+            font-size: 20px;
+        }
+        
+        .discount-bar .highlight {
+            background: #ffd700;
+            color: #333;
+            padding: 3px 12px;
+            border-radius: 50px;
+            margin: 0 5px;
+            font-weight: 800;
+        }
+        
+        .discount-bar .countdown {
+            background: rgba(0,0,0,0.3);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-family: monospace;
+            font-size: 18px;
+            direction: ltr;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .discount-bar {
+                top: 60px;
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            .discount-bar .countdown {
+                font-size: 14px;
+            }
+        }
+    </style>
+
 </head>
 <body>
 
     <header>
+
+    <!-- شريط الخصم -->
+    <div class="discount-bar" id="discountBar">
+        <i class="fas fa-fire"></i>
+        <span>🔥 عرض خاص 🔥</span>
+        <span class="highlight">خصم 5%</span>
+        <span>لأول 10 مشتركين اليوم!</span>
+        <i class="fas fa-gift"></i>
+        <span class="countdown" id="countdownTimer"></span>
+    </div>
+
         <div class="container header-content">
             <div class="logo">Social<span>Booster</span>.pro</div>
             <nav>
@@ -614,7 +688,7 @@
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label><i class="fas fa-dollar-sign"></i> السعر</label>
-                        <input type="text" class="form-control" id="totalPrice" value="$9.99" readonly>
+                        <input type="text" class="form-control" id="totalPrice" value="$5.99" readonly>
                     </div>
                 </div>
 
